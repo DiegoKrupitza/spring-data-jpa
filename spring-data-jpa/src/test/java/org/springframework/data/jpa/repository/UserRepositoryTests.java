@@ -2968,6 +2968,26 @@ public class UserRepositoryTests {
 		assertThat(foundData).containsExactly("joachim", "dave", "kevin");
 	}
 
+	@Test
+	void nativeQueryWithSpELStatementTest() {
+
+		String exmapleFirstName = "Peter";
+		User firstPeter = new User(exmapleFirstName, "2", "email1@test.com");
+		repository.save(firstPeter);
+
+		User secondPeter = new User(exmapleFirstName, "2", "email2@test.com");
+		repository.save(secondPeter);
+
+		User firstDiego = new User("Diego", "2", "email3@test.com");
+		repository.save(secondPeter);
+
+		User exampleUser = new User(exmapleFirstName, "IGNORE", "IGNORE@IGNORE.com");
+		List<User> foundData = repository.nativeQueryWithSpELStatement(exampleUser);
+
+		System.out.println(foundData);
+		assertThat(foundData).hasSize(2);
+	}
+
 	private Page<User> executeSpecWithSort(Sort sort) {
 
 		flushTestUsers();

@@ -676,6 +676,9 @@ public interface UserRepository
 			nativeQuery = true)
 	List<String> complexWithNativeStatement();
 
+	@Query(value = "SELECT c.* FROM SD_User c WHERE c.firstname = :#{#example.firstname}", nativeQuery = true)
+	List<User> nativeQueryWithSpELStatement(User example);
+
 	interface RolesAndFirstname {
 
 		String getFirstname();
